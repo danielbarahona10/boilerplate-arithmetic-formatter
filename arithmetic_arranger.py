@@ -1,4 +1,4 @@
-def arithmetic_arranger(problems):
+def arithmetic_arranger(problems, display_answers=True):
 
   arranged_problems = ""
   
@@ -7,7 +7,7 @@ def arithmetic_arranger(problems):
 
   for problem in problems:
     problem = problem.split()
-    if problem[1] != '+' and problem[1] != '-':
+    if problem[1] == '*' and problem[1] == '/':
       return "Error: Operator must be '+' or '-'."
     if len(problem[0]) > 4 or len(problem[2]) > 4:
       return "Error: Numbers cannot be more than four digits."
@@ -24,7 +24,17 @@ def arithmetic_arranger(problems):
     first_line = ' '*spaces_first_line+problem[0]
     second_line = ' '*spaces_second_line+problem[2]
     third_line = '-'*length
-    
-    print(first_line+'\n+'+second_line+'\n'+third_line+'\n')
+
+    if display_answers:
+      result = 0
+      if problem[1] == '+':
+        result = int(problem[0]) + int(problem[2])
+      elif problem[1] == '-':
+        result = int(problem[0]) - int(problem[2])
+
+      fourth_line = ' '*(length-len(str(result)))+str(result)
+      print(first_line+'\n+'+second_line+'\n'+third_line+'\n'+fourth_line+'\n')
+    else:
+      print(first_line+'\n+'+second_line+'\n'+third_line+'\n')
   
   return arranged_problems
