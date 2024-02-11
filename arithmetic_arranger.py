@@ -1,10 +1,15 @@
 def arithmetic_arranger(problems, display_answers=True):
-
-  arranged_problems = ""
   
   if len(problems) > 5:
     return "Error: Too many problems."
 
+  arranged_problems = ''
+  
+  first_line = ''
+  second_line = ''
+  third_line = ''
+  fourth_line = ''
+  
   for problem in problems:
     problem = problem.split()
     if problem[1] == '*' and problem[1] == '/':
@@ -20,21 +25,27 @@ def arithmetic_arranger(problems, display_answers=True):
     length = max(len(problem[0]), len(problem[2]))+2
     spaces_first_line = length - len(problem[0])
     spaces_second_line = length - len(problem[2])-1
-  
-    first_line = ' '*spaces_first_line+problem[0]
-    second_line = ' '*spaces_second_line+problem[2]
-    third_line = '-'*length
 
+    first_line += ' '*spaces_first_line+problem[0]+' '*4
+    second_line += problem[1]+' '*spaces_second_line+problem[2]+' '*4
+    third_line += '-'*length+' '*4
+    
     if display_answers:
       result = 0
       if problem[1] == '+':
         result = int(problem[0]) + int(problem[2])
       elif problem[1] == '-':
         result = int(problem[0]) - int(problem[2])
+      fourth_line += ' '*(length-len(str(result)))+str(result)+' '*4
 
-      fourth_line = ' '*(length-len(str(result)))+str(result)
-      print(first_line+'\n+'+second_line+'\n'+third_line+'\n'+fourth_line+'\n')
-    else:
-      print(first_line+'\n+'+second_line+'\n'+third_line+'\n')
+  first_line = first_line.rstrip()
+  second_line = second_line.rstrip()
+  third_line = third_line.rstrip()
+  fourth_line = fourth_line.rstrip()
+  
+  if display_answers:
+    arranged_problems = first_line+'\n'+second_line+'\n'+third_line+'\n'+fourth_line+'\n'
+  else:
+    arranged_problems = first_line+'\n'+second_line+'\n'+third_line+'\n'
   
   return arranged_problems
